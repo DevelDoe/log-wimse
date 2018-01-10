@@ -4,7 +4,7 @@
  * @Email:  andreeray@live.com
  * @Filename: webpack.config.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-07T12:25:33+01:00
+ * @Last modified time: 2018-01-09T14:17:22+01:00
  */
 
 
@@ -37,8 +37,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader'
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader'],
       },
       {
         test: /\.vue$/,
@@ -58,7 +58,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.common.js'
+      'vue$': 'vue/dist/vue.common.js',
+      'jquery':  'jqueryj/dist/query.min.js'
     }
   },
   devServer: {
