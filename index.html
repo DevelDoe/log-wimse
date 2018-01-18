@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js Cinema</title>
+    <title>log.wimse.se</title>
     <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -16,6 +16,8 @@
 </head>
 <body id="background">
     <div id="app">
-        <keep-alive><router-view v-bind:posts="posts" ></router-view></keep-alive>
+        <keep-alive>
+            <router-view v-bind:posts="posts"></router-view>
+        </keep-alive>
     </div>
 <script src="/dist/build.js"></script>

@@ -4,10 +4,11 @@
  * @Email:  andreeray@live.com
  * @Filename: main.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-10T17:11:25+01:00
+ * @Last modified time: 2018-01-17T23:22:50+01:00
  */
 
 import Vue from 'vue'
+
 import '../node_modules/devel-style/devel-style.css'
 
 import Overview from './components/Overview.vue'
@@ -16,8 +17,8 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
 import VueRouter from 'vue-router'
-Vue.use(VueRouter)
 import routes  from './util/routes'
+Vue.use(VueRouter)
 const router = new VueRouter({ routes })
 
 new Vue({
@@ -29,7 +30,7 @@ new Vue({
         Overview
     },
     created() {
-        this.$http.get('http://develdevils.se/log/posts/').then(res => {
+        this.$http.get('http://35.198.129.236/log/posts/').then(res => {
             this.posts = res.data
         })
     },

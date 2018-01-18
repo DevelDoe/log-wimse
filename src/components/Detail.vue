@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Detail.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-01-10T18:48:31+01:00
+@Last modified time: 2018-01-15T17:09:36+01:00
 -->
 
 <template>
@@ -14,16 +14,23 @@
         </div>
         <div  v-if="post && title && summary && body && categories && tags">
 
-            <span v-html="title"></span>
+            <div>{{ title }}</div>
+
+            <!-- markdown parsing -->
             <span v-html="summary"></span>
             <span v-html="body"></span>
 
-            <div v-for="category in categories">
-                    Categories: {{ category }}
+            <div> Published: {{ published }} </div>
+
+            <div class="">
+                <span v-for="category in categories"> {{ category }} </span>
             </div>
-            <div v-for="tag in tags">
-                    Tags: {{ tag }}
+
+            <div class="">
+                Tags: <span v-for="tag in tags">  {{ tag }} </span>
             </div>
+
+
         </div>
     </div>
 </template>
@@ -42,7 +49,7 @@ export default {
         },
         title () {
             let title = this.post.title
-            return markdown.toHTML(title) || null
+            return title || null
         },
         summary () {
             let summary = this.post.summary
@@ -51,6 +58,10 @@ export default {
         body () {
             let body = this.post.body
             return markdown.toHTML(body)
+        },
+        published () {
+            let published = this.post.published
+            return published
         },
         categories () {
             let categories = this.post.categories
