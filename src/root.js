@@ -4,17 +4,20 @@
  * @Email:  andreeray@live.com
  * @Filename: main.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-17T23:22:50+01:00
+ * @Last modified time: 2018-02-01T12:48:36+01:00
  */
 
 import Vue from 'vue'
 
 import '../node_modules/devel-style/devel-style.css'
+import './assets/transitions.css'
+import './assets/style.scss'
 
-import Overview from './components/Overview.vue'
+import App from './App.vue'
 
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+Vue.http.options.root = 'http://35.189.243.23:3000/log'
 
 import VueRouter from 'vue-router'
 import routes  from './util/routes'
@@ -22,17 +25,23 @@ Vue.use(VueRouter)
 const router = new VueRouter({ routes })
 
 new Vue({
-    el: '#app',
+    el: '#shell',
     data: {
-        posts: []
+        postsResults: [],
+        loading: false
     },
     components: {
-        Overview
+        App
     },
     created() {
-        this.$http.get('http://35.198.129.236/log/posts/').then(res => {
-            this.posts = res.data
+        this.loading = true
+        this.$http.get('posts/').then(res => {
+            this.postsResults = res.data
         })
+            .then(function (res) {
+                this.loading = false
+            })
+            .catch(function (error) { console.log(error) })
     },
     router
 })

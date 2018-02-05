@@ -1,0 +1,31 @@
+/**
+ * @Author: Andree Ray <andreeray>
+ * @Date:   2018-01-28T10:02:54+01:00
+ * @Email:  andreeray@live.com
+ * @Filename: style.css
+ * @Last modified by:   andreeray
+ * @Last modified time: 2018-01-28T10:07:11+01:00
+ */
+
+/* transition */
+.fade-enter-active {
+    transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+    opacity: 0
+}
+
+
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}

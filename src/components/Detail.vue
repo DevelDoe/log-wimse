@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Detail.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-01-15T17:09:36+01:00
+@Last modified time: 2018-01-29T18:57:49+01:00
 -->
 
 <template>
@@ -12,24 +12,23 @@
         <div id="home-link">
             <router-link v-bind:to="{ name: 'home' }">Tillbaka hem</router-link>
         </div>
-        <div  v-if="post && title && summary && body && categories && tags">
+        <div  v-if="post">
 
-            <div>{{ title }}</div>
+            <div>Title: {{ post.title }}</div>
+
+            <div> Time: {{ post.createdAt | formatDate }} </div>
+
+            <div> Category: {{ post.category }} </div>
 
             <!-- markdown parsing -->
-            <span v-html="summary"></span>
-            <span v-html="body"></span>
-
-            <div> Published: {{ published }} </div>
+            <span v-html="markedSummary"></span>
+            <span v-html="markedBody"></span>
 
             <div class="">
-                <span v-for="category in categories"> {{ category }} </span>
+                Tags: <span v-for="tag in post.tags">  {{ tag }} </span>
             </div>
 
-            <div class="">
-                Tags: <span v-for="tag in tags">  {{ tag }} </span>
-            </div>
-
+            <div> Published: {{ post.published }} </div>
 
         </div>
     </div>
@@ -37,39 +36,34 @@
 
 <script>
 import PostItem from './PostItem.vue'
-var markdown = require( "markdown" ).markdown;
+var marked = require( "marked" )
+var highlight = require('highlighter')()
+import moment from 'moment'
+
+marked.setOptions({
+  highlight: highlight
+})
 
 
 export default {
-    props: [ 'posts' ],
+    props: [ 'postsResults' ],
     computed: {
         post () {
-            let post = this.posts.find(post => post._id === this.$route.params.id)
+            let post = this.postsResults.find(post => post._id === this.$route.params.id)
             return post || null
         },
-        title () {
-            let title = this.post.title
-            return title || null
-        },
-        summary () {
+        markedSummary () {
             let summary = this.post.summary
-            return markdown.toHTML(summary)
+            return marked(summary)
         },
-        body () {
+        markedBody () {
             let body = this.post.body
-            return markdown.toHTML(body)
-        },
-        published () {
-            let published = this.post.published
-            return published
-        },
-        categories () {
-            let categories = this.post.categories
-            return categories || null
-        },
-        tags () {
-            let tags = this.post.tags
-            return tags || null
+            return marked(body)
+        }
+    },
+    filters: {
+        formatDate (date) {
+            return moment.unix(date).format("DD/MM/YYYY")
         }
     },
     components: {

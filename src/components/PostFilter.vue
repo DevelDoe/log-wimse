@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-01-07T13:31:18+01:00
+@Last modified time: 2018-02-01T13:43:53+01:00
 -->
 <template lang="html">
   <div id="post-filter">
@@ -16,3 +16,10 @@
 export default {
 }
 </script>
+
+<style media="screen">
+    #post-filter {
+        float: left;
+        width: 20%;
+    }
+</style>

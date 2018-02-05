@@ -4,7 +4,7 @@
  * @Email:  andreeray@live.com
  * @Filename: webpack.config.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-09T14:17:22+01:00
+ * @Last modified time: 2018-02-01T11:17:40+01:00
  */
 
 
@@ -39,6 +39,10 @@ module.exports = {
       {
         test: /\.css$/,
         loaders: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader'
       },
       {
         test: /\.vue$/,

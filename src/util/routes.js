@@ -4,18 +4,18 @@
  * @Email:  andreeray@live.com
  * @Filename: routes.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-11T18:39:56+01:00
+ * @Last modified time: 2018-02-01T12:49:24+01:00
  */
 
 
 
-import Overview from '../components/Overview.vue'
+import App from '../App.vue'
 import Detail from '../components/Detail.vue'
 
 export default [
     {
         path: '/',
-        component: Overview,
+        component: App,
         name: 'home'
     },
     {

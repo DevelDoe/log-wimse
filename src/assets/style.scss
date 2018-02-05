@@ -1,19 +1,14 @@
 // @Author: Andree Ray <andreeray>
-// @Date:   2018-01-07T14:46:44+01:00
+// @Date:   2018-02-01T11:18:42+01:00
 // @Email:  andreeray@live.com
 // @Filename: style.scss
 // @Last modified by:   andreeray
-// @Last modified time: 2018-01-07T19:01:19+01:00
+// @Last modified time: 2018-02-01T13:10:52+01:00
 
-html, body {
-    background: #333;
-    color: #eee;
-    a {
-        color: #eee;
-        text-decoration: none;
+$font-stack:  Helvetica, sans-serif;
+$primary-color: #fff;
 
-    }
-    small {
-        font-style: italic;
-    }
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
 }
