@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-01T13:43:48+01:00
+@Last modified time: 2018-02-06T20:59:07+01:00
 -->
 <template lang="html">
     <div id="post-list">
@@ -54,7 +54,6 @@ export default {
         var watcher = scrollMonitor.create(el)
         watcher.enterViewport(function () {
             that.appendItems()
-            console.log("entered")
         })
     }
 }

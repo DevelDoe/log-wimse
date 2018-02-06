@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-01T13:24:08+01:00
+@Last modified time: 2018-02-06T21:06:49+01:00
 -->
 <template>
     <div id="app">
@@ -21,7 +21,7 @@
         <div v-if="!loading" >
             <div id="main" class="group">
                 <post-list :posts-results="postsResults" :loading="loading"></post-list>
-                <post-filter></post-filter>
+                <post-filter :categories="categories" ></post-filter>
             </div>
         </div>
         <div v-if="loading">loading...</div>
@@ -59,6 +59,18 @@ export default {
                     })
             }
         }
+    },
+    computed:{
+        categories () {
+            let categories = this.postsResults.map(post => {
+                return post.category
+            })
+            var unique = categories.filter(function(elem, index, self) {
+                return index === self.indexOf(elem);
+            })
+            return unique || null
+        }
+
     }
 }
 </script>
