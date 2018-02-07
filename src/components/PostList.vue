@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-06T20:59:07+01:00
+@Last modified time: 2018-02-07T08:41:40+01:00
 -->
 <template lang="html">
     <div id="post-list">
@@ -25,7 +25,7 @@
 import PostItem from './PostItem.vue'
 
 export default {
-    props: [ 'postsResults', 'loading'],
+    props: [ 'postsResults', 'loading', 'category'],
     data() {
         return {
             posts: []

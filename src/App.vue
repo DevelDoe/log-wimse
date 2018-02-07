@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-06T21:06:49+01:00
+@Last modified time: 2018-02-07T08:42:01+01:00
 -->
 <template>
     <div id="app">
@@ -20,8 +20,8 @@
         </transition>
         <div v-if="!loading" >
             <div id="main" class="group">
-                <post-list :posts-results="postsResults" :loading="loading"></post-list>
-                <post-filter :categories="categories" ></post-filter>
+                <post-list :posts-results="postsResults" :loading="loading" :category="category"></post-list>
+                <post-filter :categories="categories" @check-filter="checkFilter" ></post-filter>
             </div>
         </div>
         <div v-if="loading">loading...</div>
@@ -38,7 +38,8 @@ export default {
         return {
             newSearchTerm: '',
             lastSearchTerm: '',
-            searching: false
+            searching: false,
+            category: []
         }
     },
     components: {
@@ -46,6 +47,16 @@ export default {
         PostFilter
     },
     methods: {
+        checkFilter (filter, name, checked) {
+            if (checked) {
+                this[filter].push(name)
+            } else {
+                let index = this[filter].indexOf(name)
+                if (index > -1) {
+                    this[filter].splice(index, 1)
+                }
+            }
+        },
         onSearch (e) {
             if (this.newSearchTerm.length) {
                 this.posts = []

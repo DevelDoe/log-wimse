@@ -4,25 +4,41 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-06T21:25:13+01:00
+@Last modified time: 2018-02-07T08:27:02+01:00
 -->
 <template lang="html">
   <div id="post-filter">
-      <h2>Filter List</h2>
-      <check-filter v-for="category in categories" :title="category"></check-filter>
+      <h2>Post Filter</h2>
+      <check-filter v-for="category in categories" :category="category" v-on:check-filter="checkFilter"></check-filter>
   </div>
 </template>
 
 <script>
 export default {
     props: [ 'categories' ],
+    methods: {
+        checkFilter (category, title, checked) {
+            this.$emit('check-filter', category, title, checked )
+        }
+    },
     components: {
         'check-filter': {
-            props: [ 'title' ],
-            template: `<div>
-                        <span class="active checkbox"></span>
-                        <span> {{ title }} </span>
-                       </div>`
+            data() {
+                return {
+                    checked: false
+                }
+            },
+            props: [ 'category' ],
+            template: `<div :class="{ 'check-filter' : true, 'active' : checked }" @click="checkFilter">
+                        <span class="checkbox"></span>
+                        <span> {{ category }} </span>
+                       </div>`,
+            methods: {
+                checkFilter () {
+                    this.checked = !this.checked
+                    this.$emit('check-filter', 'category', this.category, this.checked)
+                }
+            }
         }
     }
 }
@@ -33,17 +49,20 @@ export default {
         float: left;
         width: 20%;
     }
-    .checkbox {
-      display: inline-block;
-      position: relative;
-      width: 20px;
-      height: 20px;
-      border: 1px solid white;
-      border-radius: 3px;
-      user-select: none;
-      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    .check-filter {
+        cursor: pointer;
     }
-    .active::after {
+    .checkbox {
+        display: inline-block;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border: 1px solid white;
+        border-radius: 3px;
+        user-select: none;
+        box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .active .checkbox::after {
         content: '';
         border-color: white;
         background-color: white;
