@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-07T08:42:01+01:00
+@Last modified time: 2018-02-07T12:21:48+01:00
 -->
 <template>
     <div id="app">
@@ -20,7 +20,7 @@
         </transition>
         <div v-if="!loading" >
             <div id="main" class="group">
-                <post-list :posts-results="postsResults" :loading="loading" :category="category"></post-list>
+                <post-list :posts-results="postsResults" :loading="loading" :categories="categories" :tags="tags"></post-list>
                 <post-filter :categories="categories" @check-filter="checkFilter" ></post-filter>
             </div>
         </div>
@@ -39,7 +39,6 @@ export default {
             newSearchTerm: '',
             lastSearchTerm: '',
             searching: false,
-            category: []
         }
     },
     components: {
@@ -80,8 +79,20 @@ export default {
                 return index === self.indexOf(elem);
             })
             return unique || null
+        },
+        tags () {
+            let tags = this.postsResults.map(post => {
+                let res = []
+                for (var i = 0, len = post.tags.length; i < len; i++) {
+                    res = post.tags[i]
+                }
+                return res
+            })
+            var unique = tags.filter(function(elem, index, self) {
+                return index === self.indexOf(elem);
+            })
+            return unique || null
         }
-
     }
 }
 </script>

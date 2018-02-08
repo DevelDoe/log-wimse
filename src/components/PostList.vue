@@ -4,14 +4,14 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-07T08:41:40+01:00
+@Last modified time: 2018-02-08T11:55:45+01:00
 -->
 <template lang="html">
     <div id="post-list">
 
         <div v-if="!loading">
             <transition-group name="slide-fade">
-                <PostItem v-for='post in posts' :post="post" :key="post._id"></PostItem>
+                <PostItem v-for='post in filteredPosts' :post="post" :key="post._id"></PostItem>
             </transition-group>
             <div id="posts-list-bottom">
                 <div v-if="noMoreItems">No more posts</div>
@@ -25,7 +25,7 @@
 import PostItem from './PostItem.vue'
 
 export default {
-    props: [ 'postsResults', 'loading', 'category'],
+    props: [ 'postsResults', 'loading', 'categories', 'tags' ],
     data() {
         return {
             posts: []
@@ -34,17 +34,23 @@ export default {
     components: {
         PostItem
     },
-    computed: {
-        noMoreItems () {
-            return this.posts.length === this.postsResults.length && this.posts.length > 0
-        }
-    },
     methods: {
         appendItems () {
             if (this.posts.length < this.postsResults.length) {
-                var append = this.postsResults.slice(this.posts.length, this.posts.length + 10)
+                var append = this.postsResults.slice(this.posts.length, this.posts.length + 4)
                 this.posts = this.posts.concat(append)
             }
+        },
+        postPassesCategoryFilter (post) {
+            return this.categories.find(category => post.category === category)
+        }
+    },
+    computed: {
+        filteredPosts () {
+            return this.posts.filter(this.postPassesCategoryFilter)
+        },
+        noMoreItems () {
+            return this.posts.length === this.postsResults.length && this.posts.length > 0
         }
     },
     mounted() {

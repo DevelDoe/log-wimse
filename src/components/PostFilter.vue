@@ -4,39 +4,40 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-07T08:27:02+01:00
+@Last modified time: 2018-02-08T11:53:10+01:00
 -->
 <template lang="html">
   <div id="post-filter">
-      <h2>Post Filter</h2>
-      <check-filter v-for="category in categories" :category="category" v-on:check-filter="checkFilter"></check-filter>
+      <h2>Filters</h2>
+      <h3>Categories</h3>
+      <check-filter v-for="category in categories" :category="category" @check-filter="checkFilter"></check-filter>
   </div>
 </template>
 
 <script>
 export default {
-    props: [ 'categories' ],
+    props: [ 'categories'],
     methods: {
-        checkFilter (category, title, checked) {
-            this.$emit('check-filter', category, title, checked )
+        checkFilter (filter, name, checked) {
+            this.$emit('check-filter', filter, name, checked )
         }
     },
     components: {
         'check-filter': {
             data() {
                 return {
-                    checked: false
+                    checked: true
                 }
             },
             props: [ 'category' ],
             template: `<div :class="{ 'check-filter' : true, 'active' : checked }" @click="checkFilter">
                         <span class="checkbox"></span>
-                        <span> {{ category }} </span>
+                        <span v-if="category"> {{ category }} </span>
                        </div>`,
             methods: {
                 checkFilter () {
                     this.checked = !this.checked
-                    this.$emit('check-filter', 'category', this.category, this.checked)
+                    this.$emit('check-filter', 'categories', this.category, this.checked)
                 }
             }
         }
