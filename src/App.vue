@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-07T12:21:48+01:00
+@Last modified time: 2018-02-09T07:24:58+01:00
 -->
 <template>
     <div id="app">
@@ -20,8 +20,8 @@
         </transition>
         <div v-if="!loading" >
             <div id="main" class="group">
-                <post-list :posts-results="postsResults" :loading="loading" :categories="categories" :tags="tags"></post-list>
-                <post-filter :categories="categories" @check-filter="checkFilter" ></post-filter>
+                <post-list :posts-results="postsResults" :loading="loading" :categories-filter="filterCategories"></post-list>
+                <filters :categories="categories" :tags="tags" @categories-filter="categoriesFilter" ></filters>
             </div>
         </div>
         <div v-if="loading">loading...</div>
@@ -30,7 +30,7 @@
 
 <script>
 import PostList from './components/PostList.vue'
-import PostFilter from './components/PostFilter.vue'
+import Filters from './components/Filters.vue'
 
 export default {
     props: [ 'postsResults', 'loading' ],
@@ -39,14 +39,15 @@ export default {
             newSearchTerm: '',
             lastSearchTerm: '',
             searching: false,
+            filterCategories: []
         }
     },
     components: {
         PostList,
-        PostFilter
+        Filters
     },
     methods: {
-        checkFilter (filter, name, checked) {
+        categoriesFilter (filter, name, checked) {
             if (checked) {
                 this[filter].push(name)
             } else {
@@ -98,10 +99,5 @@ export default {
 </script>
 
 <style lang="css">
-    .fade-enter-active {
-        transition: opacity .5s
-    }
-    .fade-enter, .fade-leave-active {
-        opacity: 0
-    }
+
 </style>

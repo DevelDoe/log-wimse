@@ -4,40 +4,40 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-08T11:53:10+01:00
+@Last modified time: 2018-02-09T07:25:12+01:00
 -->
 <template lang="html">
-  <div id="post-filter">
+  <div id="filters">
       <h2>Filters</h2>
       <h3>Categories</h3>
-      <check-filter v-for="category in categories" :category="category" @check-filter="checkFilter"></check-filter>
+      <categories-filter v-for="category in categories" :category="category" @categories-filter="categoriesFilter"></categories-filter>
   </div>
 </template>
 
 <script>
 export default {
-    props: [ 'categories'],
+    props: [ 'categories', 'tags' ],
     methods: {
-        checkFilter (filter, name, checked) {
-            this.$emit('check-filter', filter, name, checked )
+        categoriesFilter (filter, name, checked) {
+            this.$emit('categories-filter', filter, name, checked )
         }
     },
     components: {
-        'check-filter': {
+        'categories-filter': {
             data() {
                 return {
-                    checked: true
+                    checked: false
                 }
             },
             props: [ 'category' ],
-            template: `<div :class="{ 'check-filter' : true, 'active' : checked }" @click="checkFilter">
+            template: `<div :class="{ 'check-filter' : true, 'active' : checked }" @click="categoriesFilter">
                         <span class="checkbox"></span>
                         <span v-if="category"> {{ category }} </span>
                        </div>`,
             methods: {
-                checkFilter () {
+                categoriesFilter () {
                     this.checked = !this.checked
-                    this.$emit('check-filter', 'categories', this.category, this.checked)
+                    this.$emit('categories-filter', 'filterCategories', this.category, this.checked)
                 }
             }
         }
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style media="screen">
-    #post-filter {
+    #filters {
         float: left;
         width: 20%;
     }

@@ -4,7 +4,7 @@
  * @Email:  andreeray@live.com
  * @Filename: style.css
  * @Last modified by:   andreeray
- * @Last modified time: 2018-01-28T10:07:11+01:00
+ * @Last modified time: 2018-02-09T07:21:59+01:00
  */
 
 /* transition */
@@ -22,7 +22,7 @@
   transition: all .3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
