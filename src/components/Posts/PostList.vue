@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-09T07:13:55+01:00
+@Last modified time: 2018-02-12T16:35:42+01:00
 -->
 <template lang="html">
     <div id="post-list">
@@ -25,7 +25,7 @@
 import PostItem from './PostItem.vue'
 
 export default {
-    props: [ 'postsResults', 'loading', 'categoriesFilter'],
+    props: [ 'postsResults', 'loading', 'filterCategories', 'filterTags'],
     data() {
         return {
             posts: []
@@ -41,16 +41,26 @@ export default {
                 this.posts = this.posts.concat(append)
             }
         },
-        postPassesCategoryFilter (post) {
-            if ( !this.categoriesFilter.length ) {
+        postFilter (post) {
+            if ( !this.filterCategories.length && !this.filterTags.length ) {
                 return true
+            } else {
+                if ( this.filterCategories.length ) {
+                    return this.filterCategories.find(category => {
+                        return post.category === category
+                    })
+                }
+                if ( this.filterTags.length ) {
+                    return this.filterTags.find(filter => {
+                        return post.tags.find(tag => filter === tag)
+                    })
+                }
             }
-            return this.categoriesFilter.find(category => post.category === category)
         }
     },
     computed: {
         filteredPosts () {
-            return this.posts.filter(this.postPassesCategoryFilter)
+            return this.postsResults.filter(this.postFilter)
         },
         noMoreItems () {
             return this.posts.length === this.postsResults.length && this.posts.length > 0

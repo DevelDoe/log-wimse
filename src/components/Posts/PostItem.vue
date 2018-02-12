@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: PostItem.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-01-29T19:07:17+01:00
+@Last modified time: 2018-02-09T12:05:00+01:00
 -->
 <template>
     <div class='post'>
@@ -37,6 +37,9 @@ export default {
                     break
                 case "HTML":
                     return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1024px-HTML5_logo_and_wordmark.svg.png" || null
+                    break
+                case "Vue":
+                    return "https://cdn-images-1.medium.com/max/1200/1*yeAO-nwsAqnzr7k-zoDkoQ.png" || null
                     break
                 default:
                     return null

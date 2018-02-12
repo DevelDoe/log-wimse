@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-09T07:24:58+01:00
+@Last modified time: 2018-02-12T12:35:42+01:00
 -->
 <template>
     <div id="app">
@@ -20,8 +20,8 @@
         </transition>
         <div v-if="!loading" >
             <div id="main" class="group">
-                <post-list :posts-results="postsResults" :loading="loading" :categories-filter="filterCategories"></post-list>
-                <filters :categories="categories" :tags="tags" @categories-filter="categoriesFilter" ></filters>
+                <post-list :posts-results="postsResults" :loading="loading" :filter-categories="filterCategories" :filter-tags="filterTags"></post-list>
+                <filter-list :categories="categories" :tags="tags" @categories-filter="filters" @tags-filter="filters"></filter-list>
             </div>
         </div>
         <div v-if="loading">loading...</div>
@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import PostList from './components/PostList.vue'
-import Filters from './components/Filters.vue'
+import PostList     from './components/Posts/PostList.vue'
+import FilterList   from './components/Filters/FilterList.vue'
 
 export default {
     props: [ 'postsResults', 'loading' ],
@@ -39,15 +39,16 @@ export default {
             newSearchTerm: '',
             lastSearchTerm: '',
             searching: false,
-            filterCategories: []
+            filterCategories: [],
+            filterTags: []
         }
     },
     components: {
         PostList,
-        Filters
+        FilterList
     },
     methods: {
-        categoriesFilter (filter, name, checked) {
+        filters (filter, name, checked) {
             if (checked) {
                 this[filter].push(name)
             } else {
@@ -65,7 +66,7 @@ export default {
                 this.$http.get('search/'.concat(this.newSearchTerm))
                     .then(res => {
                         this.lastSearchTerm = this.newSearchTerm
-                        this.posts = this.postResults.slice(1,5)
+                        this.posts = this.postsResults.slice(1,5)
                         this.loading = false
                     })
             }
@@ -82,12 +83,11 @@ export default {
             return unique || null
         },
         tags () {
-            let tags = this.postsResults.map(post => {
-                let res = []
-                for (var i = 0, len = post.tags.length; i < len; i++) {
-                    res = post.tags[i]
-                }
-                return res
+            let tags = []
+            this.postsResults.forEach(post => {
+                post.tags.forEach((tag) => {
+                    tags.push(tag)
+                })
             })
             var unique = tags.filter(function(elem, index, self) {
                 return index === self.indexOf(elem);

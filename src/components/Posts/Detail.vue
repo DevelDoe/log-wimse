@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Detail.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-01-29T18:57:49+01:00
+@Last modified time: 2018-02-10T09:56:58+01:00
 -->
 
 <template>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import PostItem from './PostItem.vue'
 var marked = require( "marked" )
 var highlight = require('highlighter')()
 import moment from 'moment'
@@ -65,9 +64,6 @@ export default {
         formatDate (date) {
             return moment.unix(date).format("DD/MM/YYYY")
         }
-    },
-    components: {
-        PostItem
     }
 }
 </script>

@@ -4,43 +4,35 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-09T07:25:12+01:00
+@Last modified time: 2018-02-10T09:59:23+01:00
 -->
 <template lang="html">
   <div id="filters">
       <h2>Filters</h2>
       <h3>Categories</h3>
-      <categories-filter v-for="category in categories" :category="category" @categories-filter="categoriesFilter"></categories-filter>
+      <categories v-for="category in categories" :category="category" @categories-filter="categoriesFilter"></categories>
+      <h3>Tags</h3>
+      <tags v-for="tag in tags" :tag="tag" @tags-filter="tagsFilter"></tags>
   </div>
 </template>
 
 <script>
+import Categories from './Categories.vue'
+import Tags from './Tags.vue'
+
 export default {
     props: [ 'categories', 'tags' ],
     methods: {
         categoriesFilter (filter, name, checked) {
             this.$emit('categories-filter', filter, name, checked )
+        },
+        tagsFilter (filter, name, checked) {
+            this.$emit('tags-filter', filter, name, checked)
         }
     },
     components: {
-        'categories-filter': {
-            data() {
-                return {
-                    checked: false
-                }
-            },
-            props: [ 'category' ],
-            template: `<div :class="{ 'check-filter' : true, 'active' : checked }" @click="categoriesFilter">
-                        <span class="checkbox"></span>
-                        <span v-if="category"> {{ category }} </span>
-                       </div>`,
-            methods: {
-                categoriesFilter () {
-                    this.checked = !this.checked
-                    this.$emit('categories-filter', 'filterCategories', this.category, this.checked)
-                }
-            }
-        }
+        Categories,
+        Tags
     }
 }
 </script>

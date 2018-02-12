@@ -4,13 +4,13 @@
  * @Email:  andreeray@live.com
  * @Filename: routes.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-02-01T12:49:24+01:00
+ * @Last modified time: 2018-02-10T09:58:21+01:00
  */
 
 
 
 import App from '../App.vue'
-import Detail from '../components/Detail.vue'
+import Detail from '../components/Posts/Detail.vue'
 
 export default [
     {
