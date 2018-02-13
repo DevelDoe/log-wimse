@@ -4,15 +4,25 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-12T16:35:42+01:00
+@Last modified time: 2018-02-12T17:08:59+01:00
 -->
 <template lang="html">
     <div id="post-list">
 
         <div v-if="!loading">
-            <transition-group name="slide-fade">
-                <PostItem v-for='post in filteredPosts' :post="post" :key="post._id"></PostItem>
-            </transition-group>
+
+                <div v-if="filteredPosts.length">
+                    <transition-group name="slide-fade">
+                    <PostItem v-for='post in filteredPosts' :post="post" :key="post._id"></PostItem>
+                    </transition-group>
+                </div>
+                <div v-else-if="postsResults.length">
+                    No Results
+                </div>
+                <div v-else>
+                    Loading
+                </div>
+
             <div id="posts-list-bottom">
                 <div v-if="noMoreItems">No more posts</div>
             </div>
@@ -45,15 +55,35 @@ export default {
             if ( !this.filterCategories.length && !this.filterTags.length ) {
                 return true
             } else {
+                if ( this.filterCategories.length && this.filterTags.length ) {
+                    let tags = post.tags
+                    let matched = true
+                    this.filterTags.forEach(tag => {
+                        if ( tags.indexOf(tag) === -1 ) {
+                            matched = false
+                        }
+                    })
+                    this.filterCategories.forEach(category => {
+                        if ( !(category === post.category) ) {
+                            matched = false
+                        }
+                    })
+                    return matched
+                }
                 if ( this.filterCategories.length ) {
                     return this.filterCategories.find(category => {
                         return post.category === category
                     })
                 }
                 if ( this.filterTags.length ) {
-                    return this.filterTags.find(filter => {
-                        return post.tags.find(tag => filter === tag)
+                    let tags = post.tags
+                    let matched = true
+                    this.filterTags.forEach(tag => {
+                        if ( tags.indexOf(tag) === -1 ) {
+                            matched = false
+                        }
                     })
+                    return matched
                 }
             }
         }
