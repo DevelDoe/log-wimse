@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: App.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-12T12:35:42+01:00
+@Last modified time: 2018-02-19T13:28:24+01:00
 -->
 <template>
     <div id="app">
@@ -20,8 +20,8 @@
         </transition>
         <div v-if="!loading" >
             <div id="main" class="group">
-                <post-list :posts-results="postsResults" :loading="loading" :filter-categories="filterCategories" :filter-tags="filterTags"></post-list>
-                <filter-list :categories="categories" :tags="tags" @categories-filter="filters" @tags-filter="filters"></filter-list>
+                <post-list :posts-results="postsResults" :loading="loading" :filter-categories="filterCategories" :filter-tags="filterTags" :day="day"></post-list>
+                <filter-list :categories="categories" :tags="tags" @filter="filters" :filterCategories="filterCategories" ></filter-list>
             </div>
         </div>
         <div v-if="loading">loading...</div>
@@ -33,7 +33,7 @@ import PostList     from './components/Posts/PostList.vue'
 import FilterList   from './components/Filters/FilterList.vue'
 
 export default {
-    props: [ 'postsResults', 'loading' ],
+    props: [ 'postsResults', 'loading', 'day' ],
     data() {
         return {
             newSearchTerm: '',
@@ -70,11 +70,35 @@ export default {
                         this.loading = false
                     })
             }
+        },
+        categoryFilter (post) {
+            if ( !this.filterCategories.length ) {
+                return true
+            } else {
+                return this.filterCategories.find(category => {
+                    return post.category === category
+                })
+            }
+        },
+        tagsFilter (post) {
+            if ( !this.filterTags.length ) {
+                return true
+            } else {
+                let tags = post.tags
+                let matched = true
+                this.filterTags.forEach(tag => {
+                    if ( tags.indexOf(tag) === -1 ) {
+                        matched = false
+                    }
+                })
+                return matched
+            }
         }
     },
-    computed:{
+    computed: {
         categories () {
-            let categories = this.postsResults.map(post => {
+            let posts = this.postsResults.filter(this.tagsFilter)
+            let categories = posts.map(post => {
                 return post.category
             })
             var unique = categories.filter(function(elem, index, self) {
@@ -83,16 +107,19 @@ export default {
             return unique || null
         },
         tags () {
-            let tags = []
-            this.postsResults.forEach(post => {
-                post.tags.forEach((tag) => {
-                    tags.push(tag)
+            if (this.filterCategories.length) {
+                let tags = []
+                let posts = this.postsResults.filter(this.categoryFilter)
+                posts.forEach(post => {
+                    post.tags.forEach((tag) => {
+                        tags.push(tag)
+                    })
                 })
-            })
-            var unique = tags.filter(function(elem, index, self) {
-                return index === self.indexOf(elem);
-            })
-            return unique || null
+                var unique = tags.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
+                })
+                return unique || null
+            }
         }
     }
 }

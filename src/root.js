@@ -4,7 +4,7 @@
  * @Email:  andreeray@live.com
  * @Filename: main.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-02-01T12:48:36+01:00
+ * @Last modified time: 2018-02-19T11:57:24+01:00
  */
 
 import Vue from 'vue'
@@ -24,11 +24,17 @@ import routes  from './util/routes'
 Vue.use(VueRouter)
 const router = new VueRouter({ routes })
 
+import moment from 'moment-timezone'
+moment.tz.setDefault('Europe/Stockholm')
+Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment } })
+
 new Vue({
     el: '#shell',
     data: {
         postsResults: [],
-        loading: false
+        loading: false,
+        moment,
+        day: moment()
     },
     components: {
         App

@@ -14,7 +14,7 @@
 <body id="background">
     <div id="shell" v-cloak>
         <keep-alive>
-            <router-view :posts-results="postsResults" :loading="loading"></router-view>
+            <router-view :posts-results="postsResults" :loading="loading" :day="day"></router-view>
         </keep-alive>
     </div>
 <script src="/dist/build.js"></script>

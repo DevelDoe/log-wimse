@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: PostItem.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-09T12:05:00+01:00
+@Last modified time: 2018-02-19T12:01:14+01:00
 -->
 <template>
     <div class='post'>
@@ -15,6 +15,7 @@
             </div>
 
             <h2>{{ post.title }}</h2>
+            <time datetime="date">{{ date }}</time>
             <p><small>{{ post.summary }}</small></p>
 
         </router-link>
@@ -23,8 +24,12 @@
 
 <script>
 export default {
-    props: [ 'post' ],
+    props: [ 'post', 'day' ],
     computed: {
+        date () {
+            if (this.post.updatedAt) return this.$moment.unix(this.post.updatedAt).format("YYYY-M-D H:m")
+            else return this.$moment.unix(this.post.createdAt).format("YYYY-M-D H:m")
+        },
         imgSrc () {
             let category = this.post.category
 

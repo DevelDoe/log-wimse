@@ -4,11 +4,11 @@
 @Email:  andreeray@live.com
 @Filename: Categoires.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-10T09:51:23+01:00
+@Last modified time: 2018-02-19T12:14:40+01:00
 -->
 
 <template>
-    <div :class="{ 'category-filter' : true, 'active' : checked }" @click="categoriesFilter">
+    <div :class="{ 'category-filter' : true, 'active' : checked }" @click="filter">
         <span class="checkbox"></span>
         <span v-if="category"> {{ category }} </span>
    </div>
@@ -23,9 +23,9 @@ export default {
         }
     },
     methods: {
-        categoriesFilter () {
+        filter () {
             this.checked = !this.checked
-            this.$emit('categories-filter', 'filterCategories', this.category, this.checked)
+            this.$emit('filter', 'filterCategories', this.category, this.checked)
         }
     }
 }
