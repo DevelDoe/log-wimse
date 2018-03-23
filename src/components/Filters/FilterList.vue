@@ -4,14 +4,14 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-19T13:28:56+01:00
+@Last modified time: 2018-03-01T10:38:26+01:00
 -->
 <template lang="html">
   <div id="filters">
       <h3>Categories</h3>
-      <categories v-for="category in categories" :category="category" @filter="filter"></categories>
-      <h3 v-if="filterCategories.length">Tags</h3>
-      <tags v-for="tag in tags" :tag="tag" @filter="filter"></tags>
+      <categories v-for="category in categories" :category="category" ></categories>
+      <h3>Tags</h3>
+      <tags v-for="tag in tags" :tag="tag"></tags>
   </div>
 </template>
 
@@ -20,12 +20,7 @@ import Categories from './Categories.vue'
 import Tags from './Tags.vue'
 
 export default {
-    props: [ 'categories', 'tags', 'filterCategories' ],
-    methods: {
-        filter (filter, name, checked) {
-            this.$emit('filter', filter, name, checked )
-        }
-    },
+    props: [ 'categories', 'tags' ],
     components: {
         Categories,
         Tags
@@ -47,7 +42,7 @@ export default {
         width: 20px;
         height: 20px;
         border: 1px solid white;
-        border-radius: 3px;
+        border-radius: 2px;
         user-select: none;
         box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }

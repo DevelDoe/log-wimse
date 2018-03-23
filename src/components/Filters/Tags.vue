@@ -4,13 +4,13 @@
 @Email:  andreeray@live.com
 @Filename: Tags.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-19T12:14:58+01:00
+@Last modified time: 2018-03-01T10:21:35+01:00
 -->
 
 <template>
-    <div :class="{ 'tags-filter' : true, 'active' : checked }" @click="filter">
+    <div :class="tagsFilterClass" @click="filter">
         <span class="checkbox"></span>
-        <span v-if="tag"> {{ tag }} </span>
+        <span> {{ tag }} </span>
    </div>
 </template>
 
@@ -19,13 +19,21 @@ export default {
     props: [ 'tag' ],
     data() {
         return {
-            checked: false
+            active: false
         }
     },
     methods: {
         filter () {
-            this.checked = !this.checked
-            this.$emit('filter', 'filterTags', this.tag, this.checked)
+            this.active = !this.active
+            this.$bus.$emit('filter', 'filterTags', this.tag, this.active)
+        }
+    },
+    computed: {
+        tagsFilterClass () {
+            return {
+                'tags-filter': true,
+                'active' : this.active
+            }
         }
     }
 }

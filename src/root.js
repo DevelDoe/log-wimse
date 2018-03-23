@@ -4,7 +4,7 @@
  * @Email:  andreeray@live.com
  * @Filename: main.js
  * @Last modified by:   andreeray
- * @Last modified time: 2018-02-19T11:57:24+01:00
+ * @Last modified time: 2018-03-01T09:23:44+01:00
  */
 
 import Vue from 'vue'
@@ -28,13 +28,17 @@ import moment from 'moment-timezone'
 moment.tz.setDefault('Europe/Stockholm')
 Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment } })
 
+const bus = new Vue()
+Object.defineProperty(Vue.prototype, '$bus', { get() { return this.$root.bus } })
+
 new Vue({
     el: '#shell',
     data: {
         postsResults: [],
         loading: false,
         moment,
-        day: moment()
+        day: moment(),
+        bus
     },
     components: {
         App

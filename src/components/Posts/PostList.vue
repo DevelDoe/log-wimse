@@ -4,7 +4,7 @@
 @Email:  andreeray@live.com
 @Filename: Overview.vue
 @Last modified by:   andreeray
-@Last modified time: 2018-02-19T13:30:59+01:00
+@Last modified time: 2018-03-01T10:34:09+01:00
 -->
 <template lang="html">
     <div id="post-list">
@@ -12,12 +12,6 @@
         <div v-if="!loading">
 
                 <div v-if="filteredPosts.length && filteredPosts.length < postsResults.length">
-                    <transition-group name="slide-fade">
-                        <PostItem v-for='post in filteredPosts' :post="post" :key="post._id"></PostItem>
-                    </transition-group>
-                </div>
-
-                <div v-else-if="filteredPosts.length && filteredPosts.length < postsResults.length">
                     <transition-group name="slide-fade">
                         <PostItem v-for='post in filteredPosts' :post="post" :key="post._id"></PostItem>
                     </transition-group>
@@ -45,6 +39,7 @@
 
 <script>
 import PostItem from './PostItem.vue'
+import { categoryFilter, tagsFilter }  from '../../util/bus'
 
 export default {
         props: [ 'postsResults', 'loading', 'filterCategories', 'filterTags', 'day' ],
@@ -62,36 +57,13 @@ export default {
                 var append = this.postsResults.slice(this.posts.length, this.posts.length + 6)
                 this.posts = this.posts.concat(append)
             }
-        },
-        categoryFilter (post) {
-            if ( !this.filterCategories.length ) {
-                return true
-            } else {
-                return this.filterCategories.find(category => {
-                    return post.category === category
-                })
-            }
-        },
-        tagsFilter (post) {
-            if ( !this.filterTags.length ) {
-                return true
-            } else {
-                let tags = post.tags
-                let matched = true
-                this.filterTags.forEach(tag => {
-                    if ( tags.indexOf(tag) === -1 ) {
-                        matched = false
-                    }
-                })
-                return matched
-            }
         }
     },
     computed: {
         filteredPosts () {
             return this.postsResults
-                .filter(this.categoryFilter)
-                .filter(this.tagsFilter)
+                .filter(categoryFilter.bind(this))
+                .filter(tagsFilter.bind(this))
         },
         noMoreItems () {
             return this.posts.length === this.postsResults.length && this.posts.length > 0 && this.filteredPosts.length !== 0
@@ -99,7 +71,7 @@ export default {
         noResults () {
             let categories = this.filterCategories.length ? this.filterCategories.join(', ') : ''
             let tags = this.filterTags.length ? this.filterTags.join(', ') : ''
-            return `No results for ${categories} ${ categories.length && tags.length ? ', ' : ''} ${tags}`
+            return `No results for ${categories}${ categories.length && tags.length ? ', ' : ''} ${tags}`
         }
     },
     mounted () {
